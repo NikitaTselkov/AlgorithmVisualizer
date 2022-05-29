@@ -1,5 +1,8 @@
 ﻿using AlgorithmVisualizer.Views;
+using Core;
 using Prism.Ioc;
+using Prism.Modularity;
+using SearchAlgorithms;
 using System.Windows;
 
 namespace AlgorithmVisualizer
@@ -14,9 +17,14 @@ namespace AlgorithmVisualizer
             return Container.Resolve<MainWindow>();
         }
 
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<SearchAlgorithmsModule>();
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
         }
     }
 }

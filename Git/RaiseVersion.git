@@ -1,0 +1,13 @@
+.git
+
+:tag = describe --tags => (0, 1) <! Get version>
+
+:tag = Skip({tag}, 1) --> Ignore
+:tag = Take({tag}, 5)
+
+:if(tag == Empty) :version = String(1.0.0)
+:else :version = Increment({tag}, 9, 9) <! Increases the version>
+
+tag -a v{version} -m "my version {version}: {message}" <! Adds a tag>
+
+push origin v{version}

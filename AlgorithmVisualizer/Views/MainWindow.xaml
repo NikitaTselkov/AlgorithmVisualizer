@@ -4,8 +4,20 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:Core;assembly=Core"
-        Title="{Binding Title}" Height="350" Width="525" >
+        Title="{Binding Title}" Height="350" Width="525">
+
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0">
+            <MenuItem Header="{DynamicResource Menu_Search_Algorithms}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static core:NavigateViewNames.SearchAlgorithms}" />
+            <MenuItem Header="2" />
+            <MenuItem Header="3" />
+        </Menu>
+
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" Grid.RowSpan="2" />
     </Grid>
 </Window>

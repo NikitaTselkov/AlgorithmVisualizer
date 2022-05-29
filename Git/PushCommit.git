@@ -1,0 +1,11 @@
+.git
+
+pull origin master
+ 
+:message = String(A project has been created)
+
+add *
+commit -m "{message}"
+
+<! Sends to GitHub>
+push origin : master
