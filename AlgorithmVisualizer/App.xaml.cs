@@ -2,7 +2,10 @@
 using Core;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Mvvm;
 using SearchAlgorithms;
+using System;
+using System.Reflection;
 using System.Windows;
 
 namespace AlgorithmVisualizer

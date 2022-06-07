@@ -2,7 +2,7 @@
 
 pull origin master
  
-:message = String(A project has been created)
+:message = String(Added generation of border)
 
 add *
 commit -m "{message}"

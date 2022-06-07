@@ -6,6 +6,7 @@ using SearchAlgorithms.Views;
 using System.Windows.Controls;
 using Prism.Mvvm;
 using SearchAlgorithms.ViewModels;
+using SearchAlgorithms.UserControls;
 
 namespace SearchAlgorithms
 {
@@ -25,6 +26,8 @@ namespace SearchAlgorithms
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            ViewModelLocationProvider.Register<Board, BoardViewModel>();
+
             containerRegistry.RegisterForNavigation<SearchAlgorithmsView, SearchAlgorithmsViewModel>();
         }
     }
