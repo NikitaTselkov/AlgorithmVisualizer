@@ -3,11 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"    
              xmlns:UC="clr-namespace:SearchAlgorithms.UserControls"
+             xmlns:behaviors="clr-namespace:Core.Behaviors;assembly=Core"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    
-    <Grid>
 
-        <UC:Board />
+    <i:Interaction.Triggers>
+        <behaviors:RoutedEventTrigger RoutedEvent="UC:Board.CellSelectedChanged">
+            <prism:InvokeCommandAction Command="{Binding SelectCellCommand}" />
+        </behaviors:RoutedEventTrigger>
+    </i:Interaction.Triggers>
 
-    </Grid>
+    <StackPanel>
+
+        <UC:Board Items2DArraySource="{Binding DataContext.Cells, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
+
+    </StackPanel>
 </UserControl>

@@ -26,8 +26,6 @@ namespace SearchAlgorithms
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            ViewModelLocationProvider.Register<Board, BoardViewModel>();
-
             containerRegistry.RegisterForNavigation<SearchAlgorithmsView, SearchAlgorithmsViewModel>();
         }
     }
