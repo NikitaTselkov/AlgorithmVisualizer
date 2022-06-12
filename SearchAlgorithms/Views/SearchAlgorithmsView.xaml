@@ -3,22 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"    
              xmlns:UC="clr-namespace:SearchAlgorithms.UserControls"
-             xmlns:behaviors="clr-namespace:Core.Behaviors;assembly=Core"
+             xmlns:coreBehaviors="clr-namespace:Core.Behaviors;assembly=Core"
+             xmlns:behaviors="clr-namespace:SearchAlgorithms.Behaviors"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
     <i:Interaction.Triggers>
-        <behaviors:RoutedEventTrigger RoutedEvent="UC:Board.CellSelectedChanged">
+        <coreBehaviors:RoutedEventTrigger RoutedEvent="UC:Board.CellSelectedChanged">
             <prism:InvokeCommandAction Command="{Binding SelectCellCommand}" />
-        </behaviors:RoutedEventTrigger>
-        <behaviors:RoutedEventTrigger RoutedEvent="UC:Board.StateSelectedChanged">
+        </coreBehaviors:RoutedEventTrigger>
+        <coreBehaviors:RoutedEventTrigger RoutedEvent="UC:Board.StateSelectedChanged">
             <prism:InvokeCommandAction Command="{Binding SelectStateCommand}" />
-        </behaviors:RoutedEventTrigger>
+        </coreBehaviors:RoutedEventTrigger>
     </i:Interaction.Triggers>
 
     <StackPanel>
 
-        <UC:Board Items2DArraySource="{Binding DataContext.Cells, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
-
+        <UC:Board>
+            <i:Interaction.Behaviors>
+                <behaviors:BoardPaintBehavior CellsSource="{Binding DataContext.Cells, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" />
+            </i:Interaction.Behaviors>
+        </UC:Board>
+       
     </StackPanel>
 </UserControl>

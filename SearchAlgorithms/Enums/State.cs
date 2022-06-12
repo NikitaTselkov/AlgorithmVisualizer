@@ -6,6 +6,8 @@ namespace SearchAlgorithms.Enums
     public enum State
     {
         Border,
+        Start,
+        Finish,
         Null,
         [Visibility(Visibility.Collapsed)]
         Visited,

@@ -45,15 +45,7 @@ namespace SearchAlgorithms.ViewModels
 
         private void ExecuteSelectCellCommand(RoutedSelectedCellEventArgs e)
         {
-            switch (_currentState)
-            {
-                case State.Null:
-                    BoardModel.SetState(e.Row, e.Column, State.Null);
-                    break;
-                case State.Border:
-                    BoardModel.SetState(e.Row, e.Column, State.Border);
-                    break;
-            }
+           BoardModel.SetState(e.Row, e.Column, _currentState);
         }
 
         private void ExecuteSelectStateCommand(RoutedSelectedStateEventArgs e)

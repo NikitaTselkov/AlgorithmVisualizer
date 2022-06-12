@@ -15,15 +15,6 @@ namespace SearchAlgorithms.UserControls
     /// </summary>
     public partial class Board : UserControl
     {
-        private readonly DataGrid _dataGrid;
-
-        public Board()
-        {
-            InitializeComponent();
-
-            _dataGrid = dataGrid;
-        }
-
         #region Routed Events
 
         public event RoutedEventHandler CellSelectedChanged
@@ -53,51 +44,9 @@ namespace SearchAlgorithms.UserControls
 
         #endregion
 
-        #region Dependency Properties
-
-        public IEnumerable Items2DArraySource
+        public Board()
         {
-            get { return (IEnumerable)GetValue(Items2DArraySourceProperty); }
-            set { SetValue(Items2DArraySourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty Items2DArraySourceProperty =
-            DependencyProperty.Register("Items2DArraySource",
-                typeof(IEnumerable),
-                typeof(Board),
-                new PropertyMetadata(null, Items2DArraySourceChanged));
-
-        #endregion
-
-
-        private static void Items2DArraySourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var board = (Board)d;
-            var cells = (Cell[,])e.NewValue;
-
-            if (e.OldValue != e.NewValue)
-            {
-                board.dataGrid.ItemsSource = DataGridHelper.ConvertToDataTable(cells).DefaultView;
-
-                foreach (Cell cell in cells)
-                {
-                    cell.PropertyChanged += Cell_PropertyChanged;
-                }
-
-                board.PaintCells(cells);
-            }
-            else if (e.NewValue == null)
-            {
-                foreach (Cell cell in cells)
-                {
-                    cell.PropertyChanged -= Cell_PropertyChanged;
-                }
-            }
-
-            void Cell_PropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                board.PaintCell((Cell)sender);
-            }
+            InitializeComponent();
         }
 
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -116,40 +65,6 @@ namespace SearchAlgorithms.UserControls
             {
                 if(item is State state)
                     RaiseEvent(new RoutedSelectedStateEventArgs(state, StateSelectedChangedEvent));
-            }
-        }
-
-        private void PaintCells(Cell[,] cells)
-        {
-            for (int i = 0; i < cells.GetLength(0); i++)
-            {
-                for (int j = 0; j < cells.GetLength(1); j++)
-                {
-                    PaintCell(cells[i, j]);
-                }
-            }
-        }
-
-        private void PaintCell(Cell cell)
-        {
-            DataGridCell dataGridCell = DataGridHelper.GetCell(_dataGrid, cell.Row, cell.Column);
-            if (cell != null && dataGridCell != null)
-            {
-                switch (cell.State)
-                {
-                    case State.Null:
-                        dataGridCell.Background = Brushes.White;
-                        break;
-                    case State.Border:
-                        dataGridCell.Background = Brushes.Black;
-                        break;
-                    case State.Visited:
-                        dataGridCell.Background = Brushes.LightBlue;
-                        break;
-                    case State.Path:
-                        dataGridCell.Background = Brushes.Yellow;
-                        break;
-                }
             }
         }
     }
