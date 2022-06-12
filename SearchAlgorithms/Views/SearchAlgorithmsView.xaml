@@ -11,6 +11,9 @@
         <behaviors:RoutedEventTrigger RoutedEvent="UC:Board.CellSelectedChanged">
             <prism:InvokeCommandAction Command="{Binding SelectCellCommand}" />
         </behaviors:RoutedEventTrigger>
+        <behaviors:RoutedEventTrigger RoutedEvent="UC:Board.StateSelectedChanged">
+            <prism:InvokeCommandAction Command="{Binding SelectStateCommand}" />
+        </behaviors:RoutedEventTrigger>
     </i:Interaction.Triggers>
 
     <StackPanel>

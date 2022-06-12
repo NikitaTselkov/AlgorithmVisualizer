@@ -1,10 +1,9 @@
 ﻿using Core;
+using SearchAlgorithms.Enums;
 using SearchAlgorithms.Models;
 using SearchAlgorithms.Models.Events;
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,6 +15,8 @@ namespace SearchAlgorithms.UserControls
     /// </summary>
     public partial class Board : UserControl
     {
+        private readonly DataGrid _dataGrid;
+
         public Board()
         {
             InitializeComponent();
@@ -23,13 +24,7 @@ namespace SearchAlgorithms.UserControls
             _dataGrid = dataGrid;
         }
 
-        private readonly DataGrid _dataGrid;
-
-        public IEnumerable Items2DArraySource
-        {
-            get { return (IEnumerable)GetValue(Items2DArraySourceProperty); }
-            set { SetValue(Items2DArraySourceProperty, value); }
-        }
+        #region Routed Events
 
         public event RoutedEventHandler CellSelectedChanged
         {
@@ -37,13 +32,12 @@ namespace SearchAlgorithms.UserControls
             remove { RemoveHandler(CellSelectedChangedEvent, value); }
         }
 
+        public event RoutedEventHandler StateSelectedChanged
+        {
+            add { AddHandler(StateSelectedChangedEvent, value); }
+            remove { RemoveHandler(StateSelectedChangedEvent, value); }
+        }
 
-
-        public static readonly DependencyProperty Items2DArraySourceProperty =
-            DependencyProperty.Register("Items2DArraySource",
-                typeof(IEnumerable),
-                typeof(Board),
-                new PropertyMetadata(null, Items2DArraySourceChanged));
 
         public static readonly RoutedEvent CellSelectedChangedEvent =
             EventManager.RegisterRoutedEvent("CellSelectedChanged",
@@ -51,6 +45,29 @@ namespace SearchAlgorithms.UserControls
                 typeof(RoutedPropertyChangedEventHandler<RoutedSelectedCellEventArgs>),
                 typeof(Board));
 
+        public static readonly RoutedEvent StateSelectedChangedEvent =
+            EventManager.RegisterRoutedEvent("StateSelectedChanged",
+                RoutingStrategy.Bubble,
+                typeof(RoutedPropertyChangedEventHandler<RoutedSelectedCellEventArgs>),
+                typeof(Board));
+
+        #endregion
+
+        #region Dependency Properties
+
+        public IEnumerable Items2DArraySource
+        {
+            get { return (IEnumerable)GetValue(Items2DArraySourceProperty); }
+            set { SetValue(Items2DArraySourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty Items2DArraySourceProperty =
+            DependencyProperty.Register("Items2DArraySource",
+                typeof(IEnumerable),
+                typeof(Board),
+                new PropertyMetadata(null, Items2DArraySourceChanged));
+
+        #endregion
 
 
         private static void Items2DArraySourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -93,6 +110,15 @@ namespace SearchAlgorithms.UserControls
             }
         }
 
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if(item is State state)
+                    RaiseEvent(new RoutedSelectedStateEventArgs(state, StateSelectedChangedEvent));
+            }
+        }
+
         private void PaintCells(Cell[,] cells)
         {
             for (int i = 0; i < cells.GetLength(0); i++)
@@ -116,6 +142,12 @@ namespace SearchAlgorithms.UserControls
                         break;
                     case State.Border:
                         dataGridCell.Background = Brushes.Black;
+                        break;
+                    case State.Visited:
+                        dataGridCell.Background = Brushes.LightBlue;
+                        break;
+                    case State.Path:
+                        dataGridCell.Background = Brushes.Yellow;
                         break;
                 }
             }

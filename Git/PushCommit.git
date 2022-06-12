@@ -2,7 +2,7 @@
 
 pull origin master
  
-:message = String(Added shading cells)
+:message = String(Added the ability to select the filling mode)
 
 add *
 commit -m "{message}"

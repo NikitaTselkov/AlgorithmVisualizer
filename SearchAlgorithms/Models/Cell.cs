@@ -1,19 +1,12 @@
 ﻿using Prism.Mvvm;
-using SearchAlgorithms.Models.Events;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using SearchAlgorithms.Enums;
 
 namespace SearchAlgorithms.Models
 {
     public class Cell : BindableBase
     {
-        public int Row { get; private set; }
-        public int Column { get; private set; }
+        public int Row { get; init; }
+        public int Column { get; init; }
 
         private State _state;
         public State State
@@ -22,10 +15,11 @@ namespace SearchAlgorithms.Models
             set { SetProperty(ref _state, value); }
         }
 
-        public Cell(int row, int column)
+        public Cell(int row, int column, State state = State.Null)
         {
             Row = row;
             Column = column;
+            State = state;
         }
     }
 }

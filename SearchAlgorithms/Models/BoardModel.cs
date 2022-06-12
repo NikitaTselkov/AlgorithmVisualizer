@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using SearchAlgorithms.Enums;
 using System.Threading.Tasks;
 
 namespace SearchAlgorithms.Models
 {
     public static class BoardModel
     {
-        public static async Task<Cell[,]> GenerateCellsAsync(int rowsCount, int columnsCount)
+        private static Cell[,] _cells;
+
+        public static async Task GenerateCellsAsync(int rowsCount, int columnsCount)
         {
-            var cells = new Cell[rowsCount, columnsCount];
+            _cells = new Cell[rowsCount, columnsCount];
 
             await Task.Run(() =>
             {
@@ -19,12 +17,24 @@ namespace SearchAlgorithms.Models
                 {
                     Parallel.For(0, columnsCount, (columnId) =>
                     {
-                        cells[rowId, columnId] = new Cell(rowId, columnId);
+                        _cells[rowId, columnId] = new Cell(rowId, columnId);
                     });
                 });
             }).ConfigureAwait(false);
+        }
 
-            return cells;
+        public static State GetState(int row, int column)
+        {
+            return _cells[row, column].State;
+        }
+        public static void SetState(int row, int column, State state)
+        {
+            _cells[row, column].State = state;
+        }
+
+        public static Cell[,] GetCells()
+        {
+            return _cells;
         }
     }
 }
