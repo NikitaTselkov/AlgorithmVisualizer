@@ -15,6 +15,9 @@
         <coreBehaviors:RoutedEventTrigger RoutedEvent="UC:Board.StateSelectedChanged">
             <prism:InvokeCommandAction Command="{Binding SelectStateCommand}" />
         </coreBehaviors:RoutedEventTrigger>
+        <coreBehaviors:RoutedEventTrigger RoutedEvent="UC:Board.Start">
+            <prism:InvokeCommandAction Command="{Binding StartCommand}" />
+        </coreBehaviors:RoutedEventTrigger>
     </i:Interaction.Triggers>
 
     <StackPanel>

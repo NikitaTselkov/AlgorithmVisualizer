@@ -13,6 +13,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -27,6 +28,15 @@
 
         </ComboBox>
 
+        <Button
+            Content="{DynamicResource Button_Search_Algorithms_Start}"
+            Grid.Column="1"
+            Grid.Row="0"
+            Margin="20 5"
+            Click="Button_Click">
+            
+        </Button>
+
         <DataGrid
             x:Name="dataGrid"
             AutoGenerateColumns="True"
@@ -40,7 +50,7 @@
             HorizontalScrollBarVisibility="Hidden"
             VerticalScrollBarVisibility="Hidden"
             SelectedCellsChanged="dataGrid_SelectedCellsChanged"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Grid.Row="1">
 
             <DataGrid.CellStyle>

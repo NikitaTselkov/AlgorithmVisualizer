@@ -17,6 +17,12 @@ namespace SearchAlgorithms.UserControls
     {
         #region Routed Events
 
+        public event RoutedEventHandler Start
+        {
+            add { AddHandler(StartEvent, value); }
+            remove { RemoveHandler(StartEvent, value); }
+        }
+
         public event RoutedEventHandler CellSelectedChanged
         {
             add { AddHandler(CellSelectedChangedEvent, value); }
@@ -30,6 +36,12 @@ namespace SearchAlgorithms.UserControls
         }
 
 
+        public static readonly RoutedEvent StartEvent =
+            EventManager.RegisterRoutedEvent("Start",
+                RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler),
+                typeof(Board));
+        
         public static readonly RoutedEvent CellSelectedChangedEvent =
             EventManager.RegisterRoutedEvent("CellSelectedChanged",
                 RoutingStrategy.Bubble,
@@ -66,6 +78,11 @@ namespace SearchAlgorithms.UserControls
                 if(item is State state)
                     RaiseEvent(new RoutedSelectedStateEventArgs(state, StateSelectedChangedEvent));
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(StartEvent));
         }
     }
 }

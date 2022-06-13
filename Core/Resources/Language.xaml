@@ -3,5 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <v:String x:Key="Menu_Search_Algorithms">Search algorithms</v:String>
+    <v:String x:Key="Button_Search_Algorithms_Start">Start</v:String>
     
 </ResourceDictionary>

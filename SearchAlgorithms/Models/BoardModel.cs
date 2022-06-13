@@ -67,6 +67,10 @@ namespace SearchAlgorithms.Models
                     case State.Finish:
                         dataGridCell.Background = Brushes.Purple;
                         break;
+                    case State.InQueue:
+                        //TODO: Подобрать цвет.
+                        //dataGridCell.Background = Brushes;
+                        break;
                 }
             }
         }

@@ -12,6 +12,8 @@ namespace SearchAlgorithms.Enums
         [Visibility(Visibility.Collapsed)]
         Visited,
         [Visibility(Visibility.Collapsed)]
+        InQueue,
+        [Visibility(Visibility.Collapsed)]
         Path
     }
 }
