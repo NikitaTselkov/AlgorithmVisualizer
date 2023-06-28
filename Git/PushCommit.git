@@ -2,7 +2,7 @@
 
 pull origin master
  
-:message = String(Added BFS Algorithm)
+:message = String(Added DFS Algorithm and AlgorithmBase)
 
 add *
 commit -m "{message}"

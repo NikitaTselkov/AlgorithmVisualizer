@@ -64,8 +64,10 @@ namespace SearchAlgorithms.ViewModels
 
         private void ExecuteStartCommand(RoutedEventArgs e)
         {
-            Bfs bfs = new Bfs(Cells, _startCell);
-            bfs.StartSearch().ConfigureAwait(true);
+            //Bfs bfs = new Bfs(Cells, _startCell);
+            //bfs.StartSearch().ConfigureAwait(true);
+            Dfs dfs = new Dfs(Cells, _startCell);
+            dfs.StartSearch().ConfigureAwait(true);
         }
     }
 }

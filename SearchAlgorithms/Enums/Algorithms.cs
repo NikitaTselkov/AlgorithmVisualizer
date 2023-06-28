@@ -8,6 +8,7 @@ namespace SearchAlgorithms.Enums
 {
     public enum Algorithms
     {
-        BFS
+        BFS,
+        DFS
     }
 }

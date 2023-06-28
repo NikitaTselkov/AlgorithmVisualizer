@@ -1,15 +1,18 @@
 ﻿using Core;
 using SearchAlgorithms.Enums;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SearchAlgorithms.Models.Algorithms
 {
-    public class Bfs : AlgoritmBase
+    public class Dfs : AlgoritmBase
     {
-        public Bfs(Cell[,] cells, Cell start) : base(cells, start)
+        public Dfs(Cell[,] cells, Cell start) : base(cells, start)
         {
-            _array = new Queue<Cell>();
+            _array = new Stack<Cell>();
         }
 
         public async Task StartSearch()
@@ -18,9 +21,9 @@ namespace SearchAlgorithms.Models.Algorithms
 
             while (currentCell != null)
             {
-                AddCellsToArray(currentCell, AddCellToQueue, IsCanMove);
+                AddCellsToArray(currentCell, AddCellToStack, IsCanMove);
 
-                if (((Queue<Cell>)_array).TryDequeue(out currentCell))
+                if (((Stack<Cell>)_array).TryPop(out currentCell))
                 {
                     if (currentCell.State == State.Finish)
                     {
@@ -36,12 +39,21 @@ namespace SearchAlgorithms.Models.Algorithms
             }
         }
 
-        private void AddCellToQueue(int row, int column)
+        private void AddCellToStack(int row, int column)
         {
-            ((Queue<Cell>)_array).Enqueue(_cells[row, column]);
+            ((Stack<Cell>)_array).Push(_cells[row, column]);
 
             if (_cells[row, column].State != State.Finish)
                 BoardModel.SetState(row, column, State.InQueue);
         }
+
+        public new bool IsCanMove(int row, int column)
+        {
+            return _cells[row, column].State != State.Visited
+                && _cells[row, column].State != State.Border
+                && _cells[row, column].State != State.Start;
+        }
+
+        
     }
 }
