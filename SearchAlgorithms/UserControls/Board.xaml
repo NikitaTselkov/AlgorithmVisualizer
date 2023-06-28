@@ -14,13 +14,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <ComboBox
-            x:Name="comboBox"
-            ItemsSource="{Binding Source={core:EnumBindingSource {x:Type enums:State}}}"
-            SelectionChanged="ComboBox_SelectionChanged"
+            x:Name="comboBoxAlgorithms"
+            ItemsSource="{Binding Source={core:EnumBindingSource {x:Type enums:Algorithms}}}"
+            SelectionChanged="comboBoxAlgorithms_SelectionChanged"
             SelectedIndex="0"
             Grid.Column="0"
             Grid.Row="0"
@@ -36,6 +37,17 @@
             Click="Button_Click">
             
         </Button>
+
+        <ComboBox
+            x:Name="comboBox"
+            ItemsSource="{Binding Source={core:EnumBindingSource {x:Type enums:State}}}"
+            SelectionChanged="ComboBox_SelectionChanged"
+            SelectedIndex="0"
+            Grid.Column="2"
+            Grid.Row="0"
+            Margin="20 5">
+
+        </ComboBox>
 
         <DataGrid
             x:Name="dataGrid"

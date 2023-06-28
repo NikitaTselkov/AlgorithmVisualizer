@@ -15,7 +15,7 @@ namespace SearchAlgorithms.Models.Algorithms
             _array = new Stack<Cell>();
         }
 
-        public async Task StartSearch()
+        public override async Task StartSearch()
         {
             var currentCell = _start;
 

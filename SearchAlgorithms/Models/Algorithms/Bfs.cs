@@ -12,7 +12,7 @@ namespace SearchAlgorithms.Models.Algorithms
             _array = new Queue<Cell>();
         }
 
-        public async Task StartSearch()
+        public override async Task StartSearch()
         {
             var currentCell = _start;
 
