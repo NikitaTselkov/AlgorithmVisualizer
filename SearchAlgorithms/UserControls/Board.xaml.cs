@@ -35,6 +35,12 @@ namespace SearchAlgorithms.UserControls
             remove { RemoveHandler(StateSelectedChangedEvent, value); }
         }
 
+        public event RoutedEventHandler AlgorithmSelectedChanged
+        {
+            add { AddHandler(AlgorithmSelectedChangedEvent, value); }
+            remove { RemoveHandler(AlgorithmSelectedChangedEvent, value); }
+        }
+
 
         public static readonly RoutedEvent StartEvent =
             EventManager.RegisterRoutedEvent("Start",
@@ -52,6 +58,12 @@ namespace SearchAlgorithms.UserControls
             EventManager.RegisterRoutedEvent("StateSelectedChanged",
                 RoutingStrategy.Bubble,
                 typeof(RoutedPropertyChangedEventHandler<RoutedSelectedCellEventArgs>),
+                typeof(Board));
+
+        public static readonly RoutedEvent AlgorithmSelectedChangedEvent =
+            EventManager.RegisterRoutedEvent("AlgorithmSelectedChanged",
+                RoutingStrategy.Bubble,
+                typeof(RoutedPropertyChangedEventHandler<RoutedSelectedAlgorithmEventArgs>),
                 typeof(Board));
 
         #endregion
@@ -83,6 +95,15 @@ namespace SearchAlgorithms.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RaiseEvent(new RoutedEventArgs(StartEvent));
+        }
+
+        private void comboBoxAlgorithms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                if (item is Algorithms algorithm)
+                    RaiseEvent(new RoutedSelectedAlgorithmEventArgs(algorithm, AlgorithmSelectedChangedEvent));
+            }
         }
     }
 }

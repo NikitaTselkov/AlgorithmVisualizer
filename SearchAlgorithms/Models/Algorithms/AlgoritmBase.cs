@@ -23,6 +23,8 @@ namespace SearchAlgorithms.Models.Algorithms
             _cameFrom = new TreeNode<Cell>(start);
         }
 
+        public virtual async Task StartSearch(){ }
+
         private protected void AddCellsToArray(Cell cell, Action<int, int> addCellToArray, Func<int, int, bool> isCanMove)
         {
             if (0 <= cell.Row - 1 && isCanMove(cell.Row - 1, cell.Column))

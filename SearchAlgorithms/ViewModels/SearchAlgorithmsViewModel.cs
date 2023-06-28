@@ -17,6 +17,7 @@ namespace SearchAlgorithms.ViewModels
         public static Cell[,] Cells => BoardModel.GetCells();
         private Cell _startCell;
         private State _currentState;
+        private Algorithms _currentAlgorithm;
 
         #region Commands
 
@@ -27,6 +28,10 @@ namespace SearchAlgorithms.ViewModels
         private DelegateCommand<RoutedSelectedStateEventArgs> selectStateCommand;
         public DelegateCommand<RoutedSelectedStateEventArgs> SelectStateCommand =>
             selectStateCommand ?? (selectStateCommand = new DelegateCommand<RoutedSelectedStateEventArgs>(ExecuteSelectStateCommand));
+
+        private DelegateCommand<RoutedSelectedAlgorithmEventArgs> selectAlgorithmCommand;
+        public DelegateCommand<RoutedSelectedAlgorithmEventArgs> SelectAlgorithmCommand =>
+            selectAlgorithmCommand ?? (selectAlgorithmCommand = new DelegateCommand<RoutedSelectedAlgorithmEventArgs>(ExecuteSelectAlgorithmCommand));
 
         private DelegateCommand<RoutedEventArgs> startCommand;
         public DelegateCommand<RoutedEventArgs> StartCommand =>
@@ -57,17 +62,20 @@ namespace SearchAlgorithms.ViewModels
             BoardModel.SetState(e.Row, e.Column, _currentState);
         }
 
-        private void ExecuteSelectStateCommand(RoutedSelectedStateEventArgs e)
-        {
-            _currentState = e.State;
-        }
+        private void ExecuteSelectStateCommand(RoutedSelectedStateEventArgs e) => _currentState = e.State;
+
+        private void ExecuteSelectAlgorithmCommand(RoutedSelectedAlgorithmEventArgs e) => _currentAlgorithm = e.Algorithm;
 
         private void ExecuteStartCommand(RoutedEventArgs e)
         {
-            //Bfs bfs = new Bfs(Cells, _startCell);
-            //bfs.StartSearch().ConfigureAwait(true);
-            Dfs dfs = new Dfs(Cells, _startCell);
-            dfs.StartSearch().ConfigureAwait(true);
+            AlgoritmBase algoritmBase = _currentAlgorithm switch
+            {
+                Algorithms.BFS => new Bfs(Cells, _startCell),
+                Algorithms.DFS => new Dfs(Cells, _startCell),
+                _ => throw new NotImplementedException()
+            };
+
+            algoritmBase.StartSearch().ConfigureAwait(true);
         }
     }
 }
