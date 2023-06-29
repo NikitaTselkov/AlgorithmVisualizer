@@ -1,5 +1,6 @@
 ﻿using Core;
 using SearchAlgorithms.Enums;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,6 +10,7 @@ namespace SearchAlgorithms.Models
     public static class BoardModel
     {
         private static Cell[,] _cells;
+        private static Cell _finishCell;
 
         public static async Task GenerateCellsAsync(int rowsCount, int columnsCount)
         {
@@ -29,6 +31,11 @@ namespace SearchAlgorithms.Models
         public static Cell[,] GetCells()
         {
             return _cells;
+        }
+
+        public static int GetDistanceToFinish(Cell currentCell)
+        {
+            return Math.Abs(currentCell.Column - _finishCell.Column) + Math.Abs(currentCell.Row - _finishCell.Row);
         }
 
         public static void PaintCells(Cell[,] cells, DataGrid dataGrid)
@@ -66,10 +73,10 @@ namespace SearchAlgorithms.Models
                         break;
                     case State.Finish:
                         dataGridCell.Background = Brushes.Purple;
+                        _finishCell = cell;
                         break;
                     case State.InQueue:
-                        //TODO: Подобрать цвет.
-                        //dataGridCell.Background = Brushes;
+                        dataGridCell.Background = Brushes.CornflowerBlue;
                         break;
                 }
             }

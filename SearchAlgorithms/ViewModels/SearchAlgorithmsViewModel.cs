@@ -72,6 +72,7 @@ namespace SearchAlgorithms.ViewModels
             {
                 Algorithms.BFS => new Bfs(Cells, _startCell),
                 Algorithms.DFS => new Dfs(Cells, _startCell),
+                Algorithms.A_Star => new AStar(Cells, _startCell),
                 _ => throw new NotImplementedException()
             };
 
